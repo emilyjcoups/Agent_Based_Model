@@ -5,8 +5,11 @@ Spyder Editor
 This is a temporary script file.
 """
 
+# Import libraries
+
 import random
 import operator
+import matplotlib.pyplot 
 
 # List of agents
 
@@ -120,7 +123,16 @@ answer = (((agents[0][0] - agents[1][0])**2) + ((agents[0][1] - agents[1][1])**2
 
 print(answer)
 
-print(max(agents, key= operator.itemgetter(1)))
+eastern_agent = (max(agents, key= operator.itemgetter(1)))
+
+# Plots agent locations
+
+matplotlib.pyplot.ylim(0, 99)
+matplotlib.pyplot.xlim(0, 99)
+matplotlib.pyplot.scatter(agents[0][1],agents[0][0])
+matplotlib.pyplot.scatter(agents[1][1],agents[1][0])
+matplotlib.pyplot.scatter(eastern_agent[1], eastern_agent[0], color='red')
+matplotlib.pyplot.show()
 
 # Make a second set of y and xs, and make these change randomly as well.
 # Work out the distance between the two sets of y and xs.
