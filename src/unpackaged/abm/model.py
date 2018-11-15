@@ -6,6 +6,7 @@ This is a temporary script file.
 """
 
 import random
+import operator
 
 # List of agents
 
@@ -118,6 +119,8 @@ print(agents)
 answer = (((agents[0][0] - agents[1][0])**2) + ((agents[0][1] - agents[1][1])**2))**0.5 
 
 print(answer)
+
+print(max(agents, key= operator.itemgetter(1)))
 
 # Make a second set of y and xs, and make these change randomly as well.
 # Work out the distance between the two sets of y and xs.
