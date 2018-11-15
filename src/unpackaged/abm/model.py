@@ -21,20 +21,20 @@ agents =[]
 
 # Creates agents (as many as max_agents value) with random coordinates (based on 100 x 100 grid) and adds them to list of agents
 for i in range(max_agents):
-    agents.append([random.randint(0, 99), random.randint(0, 99)])
+    agents.append([random.randint(0, 100), random.randint(0, 100)])
     
 # Moves each agent randomly 
 for i in range(max_iterations):
     for i in range(max_agents):
         if random.random() < 0.5:
-            agents[i][0] += 1
+            agents[i][0] = (agents[i][0] + 1) % 100
         else:
-            agents[i][0] -= 1
+            agents[i][0] = (agents[i][0] - 1) % 100
             
         if random.random() < 0.5:
-            agents[i][1] += 1
+            agents[i][1] = (agents[i][1] + 1) % 100
         else:
-            agents[i][1] -= 1
+            agents[i][1] = (agents[i][1] - 1) % 100
 
 
 print(agents)
@@ -47,8 +47,8 @@ print(answer)
 
 # Plots agent locations
 
-matplotlib.pyplot.ylim(0, 99)
-matplotlib.pyplot.xlim(0, 99)
+matplotlib.pyplot.ylim(0, 100)
+matplotlib.pyplot.xlim(0, 100)
 for i in range(max_agents):
     matplotlib.pyplot.scatter(agents[i][1],agents[i][0])
 '''
