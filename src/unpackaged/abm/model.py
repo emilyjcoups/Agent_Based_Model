@@ -10,6 +10,13 @@ This is a temporary script file.
 import random
 import operator
 import matplotlib.pyplot 
+import time
+
+# Calculates distance between agents 
+
+def distance_between(agents_row_a, agents_row_b):
+    print(agents_row_a, agents_row_b) 
+    return (((agents_row_a[0] - agents_row_b[0])**2) + ((agents_row_a[1] - agents_row_b[1])**2))**0.5 
 
 # Variable holding maximum number of agents 
 
@@ -24,7 +31,7 @@ for i in range(max_agents):
     agents.append([random.randint(0, 100), random.randint(0, 100)])
     
 # Moves each agent randomly 
-for i in range(max_iterations):
+for j in range(max_iterations):
     for i in range(max_agents):
         if random.random() < 0.5:
             agents[i][0] = (agents[i][0] + 1) % 100
@@ -37,13 +44,9 @@ for i in range(max_iterations):
             agents[i][1] = (agents[i][1] - 1) % 100
 
 
-print(agents)
+# print(agents)
 
-''' Calculate Euclidian distance between agents 
-answer = (((agents[0][0] - agents[1][0])**2) + ((agents[0][1] - agents[1][1])**2))**0.5 
 
-print(answer)
-'''
 
 # Plots agent locations
 
@@ -57,5 +60,18 @@ matplotlib.pyplot.scatter(eastern_agent[1], eastern_agent[0], color='red')
 '''
 matplotlib.pyplot.show()
 
-# Make a second set of y and xs, and make these change randomly as well.
-# Work out the distance between the two sets of y and xs.
+
+# Calculate Euclidian distance between each pair of agents. 
+# NOTE TO SELF: TIMER NEEDS UPDATED, DEPRECATED in PYTHON 3.3
+            
+start = time.clock()
+
+# Note to self: use agent in agents?
+for k in range(max_agents): 
+    for l in range(max_agents): 
+        distance = distance_between(agents[l], agents[k])
+        print (distance)
+
+end = time.clock()
+
+print("time = " + str(end - start))
