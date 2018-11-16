@@ -11,12 +11,27 @@ import operator
 import matplotlib.pyplot 
 import time
 import agentframework
+import csv
 
 # Calculates distance between agents 
 
 def distance_between(agents_row_a, agents_row_b):
     # print(agents_row_a.x, agents_row_b.x) 
     return (((agents_row_a.x - agents_row_b.x)**2) + ((agents_row_a.y - agents_row_b.y)**2))**0.5 
+
+environment = []
+rowlist = []
+
+f = open('in.txt', newline='') 
+reader = csv.reader(f, quoting=csv.QUOTE_NONNUMERIC)
+
+
+for row in reader:
+    for value in row:
+        rowlist.append(value)
+    environment.append(rowlist)
+f.close() 	# Don't close until you are done with the reader;
+		# the data is read on request.
 
 # Variable holding maximum number of agents 
 
@@ -35,16 +50,8 @@ for i in range(max_agents):
 for j in range(max_iterations):
     for i in range(max_agents):
         agents[i].move()
-
+        
 # print(agents)
-
-''' Testing
-a = agentframework.Agent()
-print(a.y, a.x)
-
-a.move()
-print(a.y, a.x)
-''' 
 
 # Plots agent locations
 
@@ -52,6 +59,7 @@ matplotlib.pyplot.ylim(0, 99)
 matplotlib.pyplot.xlim(0, 99)
 for i in range(max_agents):
     matplotlib.pyplot.scatter(agents[i].x, agents[i].y)
+matplotlib.pyplot.imshow(environment)
 matplotlib.pyplot.show()
 
 
