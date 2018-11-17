@@ -37,20 +37,23 @@ f.close() 	# Don't close until you are done with the reader;
 
 max_agents = 10
 max_iterations = 100
+neighbourhood = 20
 
 # List of agents
 agents =[]
 
 # Creates agents (as many as max_agents value) with random coordinates (based on 100 x 100 grid) and adds them to list of agents
 for i in range(max_agents):
-    agents.append(agentframework.Agent(environment))
+    agents.append(agentframework.Agent(environment, agents))
     # agents.append([random.randint(0, 100), random.randint(0, 100)])
     
 # Moves each agent randomly 
 for j in range(max_iterations):
     for i in range(max_agents):
+        random.shuffle(agents)
         agents[i].move()
         agents[i].eat()
+        agents[i].share_with_neighbours(neighbourhood)
         
 # print(agents)
 
