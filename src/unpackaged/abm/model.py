@@ -43,13 +43,14 @@ agents =[]
 
 # Creates agents (as many as max_agents value) with random coordinates (based on 100 x 100 grid) and adds them to list of agents
 for i in range(max_agents):
-    agents.append(agentframework.Agent())
+    agents.append(agentframework.Agent(environment))
     # agents.append([random.randint(0, 100), random.randint(0, 100)])
     
 # Moves each agent randomly 
 for j in range(max_iterations):
     for i in range(max_agents):
         agents[i].move()
+        agents[i].eat()
         
 # print(agents)
 
@@ -57,9 +58,9 @@ for j in range(max_iterations):
 
 matplotlib.pyplot.ylim(0, 99)
 matplotlib.pyplot.xlim(0, 99)
+matplotlib.pyplot.imshow(environment)
 for i in range(max_agents):
     matplotlib.pyplot.scatter(agents[i].x, agents[i].y)
-matplotlib.pyplot.imshow(environment)
 matplotlib.pyplot.show()
 
 
