@@ -7,6 +7,7 @@ Created on Fri Nov 16 13:26:36 2018
 """
 
 import random
+import matplotlib.pyplot as plt
 
 class Agent:
     def __init__(self, environment, agents):
@@ -19,6 +20,7 @@ class Agent:
 # Future step - make x any y private and include set and get 
         
     def move(self):
+        
         if random.random() < 0.5:
             self.y = (self.y + 1) % 100
         else:
@@ -46,7 +48,9 @@ class Agent:
     
     def distance_between (self, agent):
         return (((self.x - agent.x)**2) + ((self.y - agent.y)**2))**0.5
-                
+    
+        
+
     # If distance is less than or equal to the neighbourhood
         # Sum self.store and agent.store .
         # Divide sum by two to calculate average.
