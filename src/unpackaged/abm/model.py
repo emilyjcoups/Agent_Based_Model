@@ -64,17 +64,23 @@ def update(frame_number):
     
 # Reminder: before without multiple function calls for fuller agents, the agents jumped further but did not move more often and it took longer to have a winner 
     
+    winners = []
+    
     for i in range(max_agents):
         global carry_on
         print(agents[i].store)
         # need slow, fast and medium moving lists
         
-        if agents[i].store >= 4000:
-            # Make max agent the winner 
-            plt.scatter(agents[i].x, agents[i].y, marker='*', c= "Red")
-            plt.text((agents[i].x + 2), (agents[i].y - 1), "Winning agent", fontsize=12, color='Red')
+        if agents[i].store >= 3000:
+            winners.append(agents[i])
             carry_on = False
-
+            if len(winners) == 1:
+                plt.scatter(agents[i].x, agents[i].y, marker='D', c= "Red")
+                plt.text((agents[i].x + 2), (agents[i].y - 1), "Winning agent", fontsize=12, color='Red')
+            elif len(winners) > 1:
+                plt.scatter(agents[i].x, agents[i].y, marker='+', c= "Orange")
+                plt.text((agents[i].x + 2), (agents[i].y - 1), "Runner up", fontsize=12, color='Orange')
+            
         elif agents[i].store >= 2500:
             agents[i].move()
             agents[i].eat()
@@ -85,6 +91,9 @@ def update(frame_number):
         elif agents[i].store < 1000:
             plt.scatter(agents[i].x, agents[i].y, c= 'Grey', label= 'Slow')
             
+            
+            
+            # If two agents, work out the max
         # print(agents[i].x)
         agents[i].move()
         agents[i].eat()
