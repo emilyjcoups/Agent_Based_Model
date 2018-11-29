@@ -21,28 +21,78 @@ class Agent:
         
     def move(self):
         
-        if random.random() < 0.5:
-            self.y = (self.y + 1) % 100
-        else:
-            self.y = (self.y - 1) % 100
+        if self.store > 3000:
+            
+            if random.random() < 0.5:
+                self.y = (self.y + 2) % 100
+            else:
+                self.y = (self.y - 2) % 100
         
-        if random.random() < 0.5:
-            self.x = (self.x + 1) % 100
+            if random.random() < 0.5:
+                self.x = (self.x + 2) % 100
+            else:
+                self.x = (self.x - 2) % 100
+                
+ 
+        elif self.store > 2000:
+            
+            if random.random() < 0.5:
+                self.y = (self.y + 2) % 100
+            else:
+                self.y = (self.y - 2) % 100
+        
+            if random.random() < 0.5:
+                self.x = (self.x + 2) % 100
+            else:
+                self.x = (self.x - 2) % 100
+            
+            
         else:
-            self.x = (self.x - 1) % 100
+            
+            if random.random() < 0.5:
+                self.y = (self.y + 1) % 100
+            else:
+                self.y = (self.y - 1) % 100
+        
+            if random.random() < 0.5:
+                self.x = (self.x + 1) % 100
+            else:
+                self.x = (self.x - 1) % 100
     
-    def eat(self): # can you make it eat what is left?
-        if self.environment[self.y][self.x] > 10:
-            self.environment[self.y][self.x] -= 10
-            self.store += 10
+    def eat(self): 
+        
+        if self.environment[self.y][self.x] > 200:
+            self.environment[self.y][self.x] -= 20
+            self.store += 20
+        elif self.environment[self.y][self.x] > 140:
+            self.environment[self.y][self.x] -= 14
+            self.store += 14
+        elif self.environment[self.y][self.x] > 120:
+            self.environment[self.y][self.x] -= 12
+            self.store += 12
+        elif self.environment[self.y][self.x] > 80:
+            self.environment[self.y][self.x] -= 8
+            self.store += 8
+        else: 
+            self.environment[self.y][self.x] -= 5
+            self.store += 5
+            
+            
+
+# elif self.environment[self.y][self.x] > 20:
+#                self.environment[self.y][self.x] -= 20
+#                self.store += 20
+#            elif self.environment[self.y][self.x] > 10:
+#                self.environment[self.y][self.x] -= 10
+#                self.store += 10
             
     def share_with_neighbours(self, neighbourhood):
         for agent in self.agents:
             distance = self.distance_between(agent)
             if distance <= neighbourhood:
-                average = self.store + agent.store
-                self.store = average
-                agent.store = average
+                if self.store > agent.store:
+                    self.store -= agent.store
+                    agent.store += self.store
                 
                 # print("sharing " + str(distance) + " " + str(average))
     

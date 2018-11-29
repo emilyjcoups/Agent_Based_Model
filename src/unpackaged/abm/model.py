@@ -10,6 +10,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 plt.ion()
 import matplotlib.animation as animate
+import matplotlib.lines as mlines
 import random
 import operator
 import time
@@ -19,15 +20,15 @@ import csv
 
 max_agents = 10
 max_iterations = 10
-neighbourhood = 20
+neighbourhood = 2
 agents = []
 environment = []
 rowlist = []
 
 # matplot variables 
-fig = plt.figure(num= 1, figsize=(7, 7))
+fig = plt.figure(num= 1, figsize=(9, 7))
 # ax = fig.add_axes([0, 0, 1, 1])
-ax = fig.add_subplot(1,1,1)
+# ax = fig.add_subplot(1,1,1)
 
 # Read environment data 
 f = open('in.txt', newline='') 
@@ -53,24 +54,56 @@ carry_on = True
 def update(frame_number):
     
     fig.clear()
-    global carry_on
     
     ax = fig.add_subplot(1,1,1)
     axes = plt.gca()
     axes.set_xlim([0,100])
     axes.set_ylim([0,100])
-    plt.imshow(environment)
+    plt.imshow(environment) 
+    # include a scale and percentage of environment remaining 
+    
+# Reminder: before without multiple function calls for fuller agents, the agents jumped further but did not move more often and it took longer to have a winner 
     
     for i in range(max_agents):
-        plt.scatter(agents[i].x, agents[i].y, c= None)
+        global carry_on
+        print(agents[i].store)
+        # need slow, fast and medium moving lists
+        
+        if agents[i].store >= 4000:
+            # Make max agent the winner 
+            plt.scatter(agents[i].x, agents[i].y, marker='*', c= "Red")
+            plt.text((agents[i].x + 2), (agents[i].y - 1), "Winning agent", fontsize=12, color='Red')
+            carry_on = False
+
+        elif agents[i].store >= 2500:
+            agents[i].move()
+            agents[i].eat()
+            plt.scatter(agents[i].x, agents[i].y, c= 'Purple', label='Fast')
+        elif agents[i].store >= 1000:
+            agents[i].move()
+            plt.scatter(agents[i].x, agents[i].y, c= 'Pink', label= 'Average')
+        elif agents[i].store < 1000:
+            plt.scatter(agents[i].x, agents[i].y, c= 'Grey', label= 'Slow')
+            
+        # print(agents[i].x)
         agents[i].move()
-        print(agents[i].x)
         agents[i].eat()
         agents[i].share_with_neighbours(neighbourhood)
         
-    if random.random() < 0.1:
-        carry_on = False
-        print("stopping condition")
+        key_slow = mlines.Line2D([], [], color='Grey', marker='o', linestyle='None', label='Slow')
+        key_medium = mlines.Line2D([], [], color='Pink', marker='o', linestyle='None', label='Average')
+        key_fast = mlines.Line2D([], [], color='Purple', marker='o', linestyle='None', label='Fast')
+        plt.legend(handles=[key_slow, key_medium, key_fast], bbox_to_anchor=(1,1), bbox_transform=plt.gcf().transFigure, title='Agent speed')
+    
+#bbox trans bbox_transform=plt.gcf().transFigure 
+        
+def gen_function():
+    global carry_on
+    a = 0
+    while ( a < 10000000000000000000000000000) & (carry_on):
+        # print("a is equal to", a, "carry_on equals", carry_on)
+        yield a
+        a = a + 1
 
 
         # restyle(graphDiv, update, [i]);
@@ -83,18 +116,11 @@ def distance_between(agents_row_a, agents_row_b):
     # print(agents_row_a.x, agents_row_b.x) 
     return (((agents_row_a.x - agents_row_b.x)**2) + ((agents_row_a.y - agents_row_b.y)**2))**0.5 
 
-def gen_function(b = [0]):
-    a = 0
-    global carry_on #Not actually needed as we're not assigning, but clearer
-    while (a < 10) & (carry_on) :
-        yield a			# Returns control and waits next call.
-        a = a + 1
+
+
+    
 
 # Plots agent locations
 
-plt.ylim(0, 99)
-plt.xlim(0, 99)
-animation = matplotlib.animation.FuncAnimation(fig, update, interval=1, repeat=False)
-# animation = matplotlib.animation.FuncAnimation(fig, update, frames=gen_function, repeat=False)
+animation = matplotlib.animation.FuncAnimation(fig, update, interval=1, frames=gen_function, repeat=False,)
 plt.show()
-
