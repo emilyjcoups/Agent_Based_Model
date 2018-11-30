@@ -48,8 +48,8 @@ f.close() 	# Don't close until you are done with the reader;
 # matplotlib.pyplot.ion()
 
 # Creates agents (as many as max_agents value) with random coordinates (based on 100 x 100 grid) and adds them to list of agents
-for j in range(max_agents):
-    agents.append(agentframework.Agent(environment, agents))
+for identity in range(max_agents):
+    agents.append(agentframework.Agent(environment, agents, (identity + 1)))
 
 carry_on = True	
 
@@ -68,7 +68,7 @@ def update(frame_number):
     
     for i in range(max_agents):
         global carry_on
-        print(agents[i].store)
+        print(agents[i])
         # need slow, fast and medium moving lists
         
         if agents[i].store >= 3000:
@@ -80,7 +80,6 @@ def update(frame_number):
                 s.write("\n START GAME \n")
                 for m in range(max_agents):
                     s.write("Agent {} finishes with a store of {}. \n".format(str(m+1), str(agents[m].store)))
-                    print(agents[m].store)
                 s.write("END GAME \n")
                 s.close()
             
@@ -136,10 +135,6 @@ def end_game():
             e.write(" ".join(str(value) for value in row) +"\n")
         e.write("DOCUMENT END")
         e.close()
-        
-            
-        
-
 
 # Calculates distance between agents 
 
@@ -147,11 +142,6 @@ def distance_between(agents_row_a, agents_row_b):
     # print(agents_row_a.x, agents_row_b.x) 
     return (((agents_row_a.x - agents_row_b.x)**2) + ((agents_row_a.y - agents_row_b.y)**2))**0.5 
 
-
-
-    
-
-# Plots agent locations
 
 animation = matplotlib.animation.FuncAnimation(fig, update, interval=1, frames=gen_function, repeat=False,)
 plt.show()

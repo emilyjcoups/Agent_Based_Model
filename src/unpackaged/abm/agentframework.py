@@ -9,12 +9,17 @@ import random
 import matplotlib.pyplot as plt
 
 class Agent:
-    def __init__(self, environment, agents):
+    def __init__(self, environment, agents, number):
         self.x = random.randint(0,99)
         self.y = random.randint(0,99)
         self.environment = environment
         self.store = 0
         self.agents = agents
+        self.identity = number
+        
+    def __str__(self):
+        return 'Agent {} says "My location is x {}, y {} and I have eaten {} worth of environment, yum!"'.format(self.identity, self.x, self.y, self.store)
+
         
 # Future step - make x any y private and include set and get 
     '''        
