@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 """
 Created on Fri Nov 16 13:26:36 2018
-
 @author: emilycoupland
 """
 
@@ -18,7 +17,25 @@ class Agent:
         self.agents = agents
         
 # Future step - make x any y private and include set and get 
+    '''        
+    @property
+    def get_x(self):
+        return self.x
+    
+    @property
+    def set_x(self, value):
+        self.x = value
         
+    @property
+    def get_y(self):
+        return self.y
+    
+    @property
+    def set_y(self, value):
+        self.y = value
+    ''' 
+    
+    
     def move(self):
         
         if self.store > 3000:

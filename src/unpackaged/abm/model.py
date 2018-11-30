@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """
 Spyder Editor
-
 This is a temporary script file.
 """
 
@@ -20,19 +19,22 @@ import csv
 
 max_agents = 10
 max_iterations = 10
-neighbourhood = 2
+neighbourhood = 7
 agents = []
 environment = []
 rowlist = []
+winners = []
 
 # matplot variables 
-fig = plt.figure(num= 1, figsize=(9, 7))
+fig = plt.figure(num= 1, figsize=(9, 5))
 # ax = fig.add_axes([0, 0, 1, 1])
 # ax = fig.add_subplot(1,1,1)
 
 # Read environment data 
 f = open('in.txt', newline='') 
 reader = csv.reader(f, quoting=csv.QUOTE_NONNUMERIC) 
+
+# open('end_environment.txt', 'w').close()
 
 for row in reader:
     for value in row:
@@ -64,8 +66,6 @@ def update(frame_number):
     
 # Reminder: before without multiple function calls for fuller agents, the agents jumped further but did not move more often and it took longer to have a winner 
     
-    winners = []
-    
     for i in range(max_agents):
         global carry_on
         print(agents[i].store)
@@ -73,24 +73,38 @@ def update(frame_number):
         
         if agents[i].store >= 3000:
             winners.append(agents[i])
+            # print(winners)
             carry_on = False
+            
+            with open('stores_record.txt', 'a+') as s:
+                s.write("\n START GAME \n")
+                for m in range(max_agents):
+                    s.write("Agent {} finishes with a store of {}. \n".format(str(m+1), str(agents[m].store)))
+                    print(agents[m].store)
+                s.write("END GAME \n")
+                s.close()
+            
             if len(winners) == 1:
-                plt.scatter(agents[i].x, agents[i].y, marker='D', c= "Red")
-                plt.text((agents[i].x + 2), (agents[i].y - 1), "Winning agent", fontsize=12, color='Red')
+                plt.scatter(agents[i].x, agents[i].y, marker='D', c= "Orange")
+                plt.text((agents[i].x + 4), (agents[i].y - 1), "{} is the winner!".format(i + 1), fontsize=8, color='White', backgroundcolor='Black')
+                # end_game()
             elif len(winners) > 1:
-                plt.scatter(agents[i].x, agents[i].y, marker='+', c= "Orange")
-                plt.text((agents[i].x + 2), (agents[i].y - 1), "Runner up", fontsize=12, color='Orange')
+                plt.scatter(agents[i].x, agents[i].y, marker='+', c= "Cyan")
+                plt.text((agents[i].x + 4), (agents[i].y - 1), "{} is a runner up".format(i + 1), fontsize=8, color='White', backgroundcolor='Black')
+            
             
         elif agents[i].store >= 2500:
             agents[i].move()
             agents[i].eat()
             plt.scatter(agents[i].x, agents[i].y, c= 'Purple', label='Fast')
+            plt.text((agents[i].x + 2), (agents[i].y - 1), str(i + 1), fontsize=8, color='White')
         elif agents[i].store >= 1000:
             agents[i].move()
             plt.scatter(agents[i].x, agents[i].y, c= 'Pink', label= 'Average')
+            plt.text((agents[i].x + 2), (agents[i].y - 1), str(i + 1), fontsize=8, color='White')
         elif agents[i].store < 1000:
             plt.scatter(agents[i].x, agents[i].y, c= 'Grey', label= 'Slow')
-            
+            plt.text((agents[i].x + 2), (agents[i].y - 1), str(i + 1), fontsize=8, color='White')
             
             
             # If two agents, work out the max
@@ -113,11 +127,19 @@ def gen_function():
         # print("a is equal to", a, "carry_on equals", carry_on)
         yield a
         a = a + 1
-
-
-        # restyle(graphDiv, update, [i]);
+        
+def end_game():
+    print('End game function called')
+    with open('end_environment.txt', 'w') as e:
+        e.write("END ENVIRONMENT: \n")
+        for row in environment: 
+            e.write(" ".join(str(value) for value in row) +"\n")
+        e.write("DOCUMENT END")
+        e.close()
+        
             
-            # fig.clear()  
+        
+
 
 # Calculates distance between agents 
 
