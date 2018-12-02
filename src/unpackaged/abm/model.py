@@ -17,39 +17,44 @@ import agentframework
 import csv
 
 
-max_agents = 10
+max_agents = 10 # rename these > not max, descriptive 
 max_iterations = 10
-neighbourhood = 7
-agents = []
+neighbourhood = 30
+max_enemies = 10
+heroes = []
+enemies =[]
+winners = []
 environment = []
 rowlist = []
-winners = []
 
 # matplot variables 
-fig = plt.figure(num= 1, figsize=(9, 5))
+fig = plt.figure(num= 1, figsize=(11, 5))
 # ax = fig.add_axes([0, 0, 1, 1])
 # ax = fig.add_subplot(1,1,1)
 
 # Read environment data 
-f = open('in.txt', newline='') 
+f = open('environment.txt', newline='') 
 reader = csv.reader(f, quoting=csv.QUOTE_NONNUMERIC) 
 
 # open('end_environment.txt', 'w').close()
 
 for row in reader:
     for value in row:
-        rowlist.append(value)
+        rowlist.append(int(value))
     environment.append(rowlist)
     rowlist = []
 f.close() 	# Don't close until you are done with the reader;
 		# the data is read on request.
 
-
+# Rename agent hero 
 # matplotlib.pyplot.ion()
 
 # Creates agents (as many as max_agents value) with random coordinates (based on 100 x 100 grid) and adds them to list of agents
 for identity in range(max_agents):
-    agents.append(agentframework.Agent(environment, agents, (identity + 1)))
+    heroes.append(agentframework.Agent(environment, heroes, (identity + 1), enemies))
+    
+for identity in range(max_agents):
+    enemies.append(agentframework.Agent(environment, heroes, (identity + 1), enemies))
 
 carry_on = True	
 
@@ -59,71 +64,73 @@ def update(frame_number):
     
     ax = fig.add_subplot(1,1,1)
     axes = plt.gca()
-    axes.set_xlim([0,100])
-    axes.set_ylim([0,100])
+    axes.set_xlim([0,300])
+    axes.set_ylim([0,300])
     plt.imshow(environment) 
-    # include a scale and percentage of environment remaining 
+    plt.colorbar()
+
+    for enemy in enemies: 
+        enemy.move()
+        enemy.eat()
+        plt.scatter(enemy.x, enemy.y, marker="x", c= 'Black')
     
-# Reminder: before without multiple function calls for fuller agents, the agents jumped further but did not move more often and it took longer to have a winner 
-    
-    for i in range(max_agents):
+    for hero in heroes:
+        print(hero)
         global carry_on
-        print(agents[i])
         # need slow, fast and medium moving lists
         
-        if agents[i].store >= 3000:
-            winners.append(agents[i])
-            # print(winners)
+        if hero.store >= 3000:
             carry_on = False
-            
+            winners.append(hero)
+            print(winners)
+            print(winners[0].y, winners[0].x)
+            # end_game()
+            '''
             with open('stores_record.txt', 'a+') as s:
                 s.write("\n START GAME \n")
-                for m in range(max_agents):
-                    s.write("Agent {} finishes with a store of {}. \n".format(str(m+1), str(agents[m].store)))
+                for hero in heroes:
+                    s.write("Agent {} finishes with a store of {}. \n".format(str(hero.identity), str(hero.store)))
                 s.write("END GAME \n")
                 s.close()
-            
-            if len(winners) == 1:
-                plt.scatter(agents[i].x, agents[i].y, marker='D', c= "Orange")
-                plt.text((agents[i].x + 4), (agents[i].y - 1), "{} is the winner!".format(i + 1), fontsize=8, color='White', backgroundcolor='Black')
+            '''
+
+            plt.scatter(winners[0].x, winners[0].y, marker="D", c= "Orange")
+            plt.text((winners[0].x + 10), (winners[0].y - 1), "{} is the winner!".format(winners[0].identity), fontsize=8, color='White', backgroundcolor='Black')
+            print("We have a winner! Agent {} wins with a store of {}".format(winners[0].identity, winners[0].store))
                 # end_game()
-            elif len(winners) > 1:
-                plt.scatter(agents[i].x, agents[i].y, marker='+', c= "Cyan")
-                plt.text((agents[i].x + 4), (agents[i].y - 1), "{} is a runner up".format(i + 1), fontsize=8, color='White', backgroundcolor='Black')
             
+        elif hero.store >= 2500:
+            plt.scatter(hero.x, hero.y, c= 'Purple', label='Fast')
+            plt.text((hero.x + 8), (hero.y - 1), str(hero.identity), fontsize=8, color='White')
+        elif hero.store >= 1000:
+            plt.scatter(hero.x, hero.y, c= 'Pink', label= 'Average')
+            plt.text((hero.x + 8), (hero.y - 1), str(hero.identity), fontsize=8, color='White')
+        elif hero.store < 1000:
+            plt.scatter(hero.x, hero.y, c= 'Grey', label= 'Slow')
+            plt.text((hero.x + 8), (hero.y - 1), str(hero.identity), fontsize=8, color='White')
             
-        elif agents[i].store >= 2500:
-            agents[i].move()
-            agents[i].eat()
-            plt.scatter(agents[i].x, agents[i].y, c= 'Purple', label='Fast')
-            plt.text((agents[i].x + 2), (agents[i].y - 1), str(i + 1), fontsize=8, color='White')
-        elif agents[i].store >= 1000:
-            agents[i].move()
-            plt.scatter(agents[i].x, agents[i].y, c= 'Pink', label= 'Average')
-            plt.text((agents[i].x + 2), (agents[i].y - 1), str(i + 1), fontsize=8, color='White')
-        elif agents[i].store < 1000:
-            plt.scatter(agents[i].x, agents[i].y, c= 'Grey', label= 'Slow')
-            plt.text((agents[i].x + 2), (agents[i].y - 1), str(i + 1), fontsize=8, color='White')
-            
-            
-            # If two agents, work out the max
-        # print(agents[i].x)
-        agents[i].move()
-        agents[i].eat()
-        agents[i].share_with_neighbours(neighbourhood)
+        for enemy in enemies:
+            enemy.eat_neighbours(neighbourhood, hero)
         
-        key_slow = mlines.Line2D([], [], color='Grey', marker='o', linestyle='None', label='Slow')
-        key_medium = mlines.Line2D([], [], color='Pink', marker='o', linestyle='None', label='Average')
-        key_fast = mlines.Line2D([], [], color='Purple', marker='o', linestyle='None', label='Fast')
-        plt.legend(handles=[key_slow, key_medium, key_fast], bbox_to_anchor=(1,1), bbox_transform=plt.gcf().transFigure, title='Agent speed')
-    
+        hero.move()
+        hero.eat()
+        hero.share_with_neighbours(neighbourhood)
+        # plt.text((enemy.x + 8), (enemy.y - 1), str(enemy.identity + 1), fontsize=8, color='White')
+            
+        enemy = mlines.Line2D([], [], color='Black', marker='x', linestyle='None', label='Enemy')
+        key_slow = mlines.Line2D([], [], color='Grey', marker='o', linestyle='None', label='Slow hero')
+        key_medium = mlines.Line2D([], [], color='Pink', marker='o', linestyle='None', label='Average hero')
+        key_fast = mlines.Line2D([], [], color='Purple', marker='o', linestyle='None', label='Fast hero')
+        
+        plt.legend(handles=[key_slow, key_medium, key_fast, enemy], bbox_to_anchor=(1,1), bbox_transform=plt.gcf().transFigure, title='Agent key')
+
+
 #bbox trans bbox_transform=plt.gcf().transFigure 
         
 def gen_function():
     global carry_on
     a = 0
-    while ( a < 10000000000000000000000000000) & (carry_on):
-        # print("a is equal to", a, "carry_on equals", carry_on)
+    while carry_on:
         yield a
         a = a + 1
         
@@ -137,11 +144,6 @@ def end_game():
         e.close()
 
 # Calculates distance between agents 
-
-def distance_between(agents_row_a, agents_row_b):
-    # print(agents_row_a.x, agents_row_b.x) 
-    return (((agents_row_a.x - agents_row_b.x)**2) + ((agents_row_a.y - agents_row_b.y)**2))**0.5 
-
 
 animation = matplotlib.animation.FuncAnimation(fig, update, interval=1, frames=gen_function, repeat=False,)
 plt.show()
