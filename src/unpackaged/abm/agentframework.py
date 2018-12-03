@@ -13,6 +13,7 @@ class Agent:
         self.x = random.randint(0,299)
         self.y = random.randint(0,299)
         self.environment = environment
+        self.neighbourhood = 30
         self.store = 0
         self.agents = agents
         self.enemies = enemies
@@ -20,7 +21,7 @@ class Agent:
        
     def __str__(self):
         return 'Agent {} says "My location is x {}, y {} and I have eaten {} worth of environment, yum!"'.format(self.identity, self.x, self.y, self.store)   
-    
+
     def move(self):
         
         if self.store > 3000:
@@ -77,18 +78,18 @@ class Agent:
             self.store += self.environment[self.y][self.x]
             
 # avoid comparing itself 
-    def share_with_neighbours(self, neighbourhood):
+    def share_with_neighbours(self):
         for agent in self.agents:
             distance = self.distance_between(agent)
-            if distance <= neighbourhood:
+            if distance <= self.neighbourhood:
                 if self.store > agent.store:
                     difference = self.store - agent.store
                     self.store -= difference
                     agent.store += difference
                 
-    def eat_neighbours(self, neighbourhood, agent):
+    def eat_neighbours(self, agent):
         distance = self.distance_between(agent)
-        if distance <= neighbourhood - 20: 
+        if distance <= self.neighbourhood - 20: 
             agent.store -= agent.store
             self.store += agent.store
             print("Agent {} store stolen by enemy".format(agent.identity))
@@ -97,6 +98,7 @@ class Agent:
     
     def distance_between (self, agent):
         return (((self.x - agent.x)**2) + ((self.y - agent.y)**2))**0.5
+    
     
         
 
