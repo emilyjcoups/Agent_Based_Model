@@ -17,3 +17,15 @@ Hero 8 finishes with a total store of 70.
 Hero 9 finishes with a total store of 2010. 
 Hero 10 finishes with a total store of 0. 
 GAME ENDS 
+GAME STARTS with 10 heroes and 5 enemies: 
+Hero 1 finishes with a total store of 682. 
+Hero 2 finishes with a total store of 3010. 
+Hero 3 finishes with a total store of 2022. 
+Hero 4 finishes with a total store of 2378. 
+Hero 5 finishes with a total store of 1878. 
+Hero 6 finishes with a total store of 884. 
+Hero 7 finishes with a total store of 1780. 
+Hero 8 finishes with a total store of 1936. 
+Hero 9 finishes with a total store of 978. 
+Hero 10 finishes with a total store of 1262. 
+GAME ENDS 
