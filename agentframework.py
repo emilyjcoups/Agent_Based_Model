@@ -6,7 +6,6 @@ Created on Fri Nov 16 13:26:36 2018
 """
 
 import random
-import matplotlib.pyplot as plt
 
 class Agent:
     def __init__(self, environment, agents, number, enemies):
