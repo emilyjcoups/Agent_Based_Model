@@ -16,3 +16,6 @@ __Hero agents move around 300 x 300 plot, eating the environment to gain speed a
       
 ### Installation 
 No installation requirements
+
+### Contributions 
+LINK
