@@ -8,6 +8,9 @@ __Enemy agents compete to eat the environment and steal heroes' stores.__
 
 __The first hero to reach a food store of 3000 wins.__
 
+![example screenshot](https://github.com/emilyjcoups/Agent_Based_Model/blob/master/AMB_5_agents_won.png "Example screenshot with 5 agents")
+       
+
 ### Game logic
   * User requested to set the number of heroes and enemies (within the console)
   * Heroes and enemies are created from the same Agent class. Their starting coordinates (between 0 and 299) are generated randomly. 
