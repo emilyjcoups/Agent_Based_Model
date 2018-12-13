@@ -20,10 +20,7 @@ __Hero agents move around 300 x 300 plot, eating the environment to gain speed a
 
 All libraries available within the [Anaconda](https://www.anaconda.com/download/) package. 
 
-Please ensure IPython console backend is set to automatic (default for Mac users). 
-To set backend to automatic in Windows 
-* Go to: Tools > Preferences > IPython console > Graphics 
-* Set backend to automatic 
+Please ensure IPython console backend is set to _automatic_.
 
 ### Contributions 
 Contributions welcome. 
