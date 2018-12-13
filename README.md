@@ -2,7 +2,9 @@
 > Hero agents compete to eat the most environment on a 300x300 graph plot
 
 ### Summary 
-__Hero agents move around 300 x 300 plot, eating the environment to gain speed and sharing food stores with agents in their neighbourhood. The first hero to reach a food store of 3000 wins. Enemy agents compete to eat the environment and steal heroes stores.__
+__Hero agents move around 300 x 300 plot, eating the environment to gain speed and sharing food stores with agents in their neighbourhood.__ 
+
+__The first hero to reach a food store of 3000 wins. Enemy agents compete to eat the environment and steal heroes stores.__
 
 ### Game logic
   * Console requests user to enter values for the number of heroes and enemies in the game
