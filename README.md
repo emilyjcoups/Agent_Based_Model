@@ -1,3 +1,5 @@
+ <!--- Markdown written by Emily Coupland ---> 
+
 # Hero Agent Game
 > Hero agents compete to eat the most of the plotted environment. Enemy agents work against them. 
 
@@ -28,6 +30,8 @@ __The first hero to reach a food store of 3000 wins.__
 All libraries available within the [Anaconda](https://www.anaconda.com/download/) package. 
 
 Please ensure IPython console backend is set to __automatic__.
+
+Run __model.py__ script.
 
 ### Contributions 
 
