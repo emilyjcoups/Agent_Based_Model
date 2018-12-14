@@ -8,13 +8,13 @@ __Enemy agents compete to eat the environment and steal heroes' stores.__
 
 __The first hero to reach a food store of 3000 wins.__
 
-![example screenshot](https://github.com/emilyjcoups/Agent_Based_Model/blob/master/AMB_5_agents_won.png "Example screenshot with 5 agents")
+![example screenshot](https://github.com/emilyjcoups/Agent_Based_Model/blob/master/AMB_5_agents_won.png "Example screenshot with 5 hero agents")
        
 
 ### Game logic
-  * User requested to set the number of heroes and enemies (within the console)
+  * User is requested to set the number of heroes and enemies (within the console)
   * Heroes and enemies are created from the same Agent class. Their starting coordinates (between 0 and 299) are generated randomly. 
-  * Heroes and enemies move randomly and eat the environment. Their speed increases as their stores increase and reach certain thresholds. 
+  * Heroes and enemies move randomly and eat the environment. Their speed increases as their stores increase.
   * The distance is calculated between each pair of heroes, as well as between heroes and enemies:
       * If hero pairs are within same neighbourhood, the hero with the lower store steals the store advantage from the other hero's store. 
       * If an enemy enters a hero's neighbourhood, the enemy steals the hero's entire store 
@@ -30,6 +30,7 @@ All libraries available within the [Anaconda](https://www.anaconda.com/download/
 Please ensure IPython console backend is set to __automatic__.
 
 ### Contributions 
+
 Contributions welcome. 
 
 Please use [contributions](https://github.com/emilyjcoups/Agent_Based_Model/tree/contributions) branch.
