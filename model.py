@@ -4,7 +4,6 @@ Spyder Editor
 This is a temporary script file.
 """
 # Import libraries
-import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.animation as animate
 import matplotlib.lines as mlines
