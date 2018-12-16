@@ -10,7 +10,7 @@ __Enemy agents compete to eat the environment and steal heroes' stores.__
 
 __The first hero to reach a food store of 3000 wins.__
 
-![example screenshot](https://github.com/emilyjcoups/Agent_Based_Model/blob/master/AMB_5_agents_won.png "Example screenshot with 5 hero agents")
+![example screenshot](https://github.com/emilyjcoups/Agent_Based_Model/blob/master/Screenshot_example.png "Example screenshot with 5 hero agents")
        
 
 ### Game logic
