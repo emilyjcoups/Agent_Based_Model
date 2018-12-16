@@ -1,4 +1,3 @@
 __pycache__/
-stores_record.txt
-end_environment.txt
+*.txt
 .DS_store
