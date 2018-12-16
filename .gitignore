@@ -2,3 +2,4 @@ __pycache__/
 *.png
 stores_record.txt
 end_environment.txt
+.DS_store
